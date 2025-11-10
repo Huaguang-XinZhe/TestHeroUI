@@ -1,0 +1,70 @@
+"use client";
+
+
+import React from "react";
+import {Chip, Radio} from "@heroui/react";
+import {cn} from "@heroui/react";
+
+
+const PaymentMethodRadio = React.forwardRef(
+  (
+    {
+      label,
+      children,
+      description,
+      icon,
+      isExpired,
+      isRecommended,
+      classNames = {},
+      className,
+      ...props
+    },
+    ref,
+  ) => (
+    <Radio
+      ref={ref}
+      {...props}
+      classNames={{
+        ...classNames,
+        base: cn(
+          "inline-flex m-0 px-3 py-4 max-w-full items-center justify-between",
+          "flex-row-reverse w-full cursor-pointer rounded-lg 3 border-medium! border-default-100",
+          "data-[selected=true]:border-primary",
+          classNames?.base,
+          className,
+        ),
+        labelWrapper: cn("ml-0", classNames?.labelWrapper),
+      }}
+      color="primary"
+    >
+      <div className="flex w-full items-center gap-3">
+        <div className="item-center rounded-small flex p-2">{icon}</div>
+        <div className="flex w-full flex-col gap-1">
+          <div className="flex items-center gap-3">
+            <p className="text-small">{label}</p>
+            {isExpired && (
+              <Chip className="text-tiny h-6 p-0" color="danger">
+                Expired
+              </Chip>
+            )}
+
+
+            {isRecommended && (
+              <Chip className="text-tiny h-6 p-0" color="success" variant="flat">
+                Recommended
+              </Chip>
+            )}
+          </div>
+          <p className="text-tiny text-default-400">{description || children}</p>
+        </div>
+      </div>
+    </Radio>
+  ),
+);
+
+
+PaymentMethodRadio.displayName = "PaymentMethodRadio";
+
+
+export default PaymentMethodRadio;
+
